@@ -47,6 +47,7 @@ public:
 };
 
 int main() {
+    // Create graph
     ogdf::Graph graph;
     auto v1 = graph.newNode();
     auto v2 = graph.newNode();
@@ -59,8 +60,11 @@ int main() {
     graph.newEdge(v1, v3);
     graph.newEdge(v2, v4);
 
+    // Create enumerator with callback
     EnumerateEmbedding enumerator(graph, [&]() {
-        std::cout << "Graph's genus = " << graph.genus() << std::endl;
+        std::cout << "Graph's genus = " << graph.genus() << std::endl; // Simple callback: compute the number of crossings of the embedding
     });
+
+    // Start enumerating and write the number of embeddings into stdout. Expect (3!)^4 = 1296 embeddings.
     std::cout << enumerator.enumerate() << std::endl;
 }
